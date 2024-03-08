@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "666549115411",
+    "project_id": "csi-hackathon-55684",
+    "storage_bucket": "csi-hackathon-55684.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666549115411:android:a8fa111ab0e102d9a73de6",
+        "android_client_info": {
+          "package_name": "com.example.csi_hackathon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9-o048q5mIbeAz8UpjDYFqTRM3HjnkOw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
