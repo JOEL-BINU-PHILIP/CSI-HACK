@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csi_hackathon/constants.dart';
-import 'package:csi_hackathon/resources/auth_methods.dart';
-import 'package:csi_hackathon/screens/add_post_screen.dart';
+import 'package:csi_hackathon/screens/camera_screen.dart';
+import 'package:csi_hackathon/screens/gallery_screen.dart';
 import 'package:csi_hackathon/screens/home_screen.dart';
 import 'package:csi_hackathon/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,15 +17,11 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   var userData = {};
-  int _currentIndex = 0;
    
   final List<Widget> _tabs = [
-    // HomeScreen(),
-    // FavoritesScreen(),
-    // ProfileScreen(),
     Home(),
-    AddPostScreen(),
-    Text('Gallery'),
+    CameraScreen(),
+    GalleryScreen(),
   ];
   
   getData() async {
@@ -56,7 +52,7 @@ class _MainScreenState extends State<MainScreen> {
       length: _tabs.length,
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: 130,
+          toolbarHeight: 120,
           automaticallyImplyLeading: false,
           backgroundColor: darkgreen,
           title: Column(

@@ -62,18 +62,9 @@ class StartingPage extends StatelessWidget {
             ),
             AccessButton(buttonText: 'Login', onPressed: navigateToLoginScreen),
             AccessButton(buttonText: 'Register', onPressed: navigateToSignUp),
+             bottom_text(),
             SizedBox(
-              height: 24,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Developed by ' , style: TextStyle(color: Colors.grey),),
-                Text('QuadrX' , style: TextStyle(color: darkgreen),),
-              ],
-            ),
-            SizedBox(
-              height: 24,
+              height: 18,
             )
           ],
         ),

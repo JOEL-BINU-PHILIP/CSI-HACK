@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:csi_hackathon/constants.dart';
-import 'package:csi_hackathon/models/user_model.dart';
+import 'package:csi_hackathon/screens/result_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,14 +9,14 @@ import 'package:csi_hackathon/utils.dart';
 // import 'package:instagram_clone/providers/user_provider.dart';
 // import 'package:provider/provider.dart';
 
-class AddPostScreen extends StatefulWidget {
-  const AddPostScreen({super.key});
+class GalleryScreen extends StatefulWidget {
+  const GalleryScreen({super.key});
 
   @override
-  State<AddPostScreen> createState() => _AddPostScreenState();
+  State<GalleryScreen> createState() => _GalleryScreenState();
 }
 
-class _AddPostScreenState extends State<AddPostScreen> {
+class _GalleryScreenState extends State<GalleryScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
@@ -29,12 +29,19 @@ class _AddPostScreenState extends State<AddPostScreen> {
   bool _isLoading = false;
   Uint8List? _file;
   final TextEditingController _descriptionController = TextEditingController();
+    void navigateToResultScreen(String res) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) =>ResultScreen(res: res),
+      ),
+    );
+  }
   void postImage(Uint8List image, String uid) async {
     setState(() {
       _isLoading = true;
     });
     try {
-      String res = await FireStoreMethods().uploadPost(_file!, uid);
+      String res = await FireStoreMethods().uploadImage(_file!);
       setState(() {
         _isLoading = false;
       });
@@ -42,7 +49,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         showSnackBar('Posted!', context);
         clearImage();
       } else {
-        showSnackBar(res, context);
+        navigateToResultScreen(res);
       }
     } catch (e) {
       showSnackBar(e.toString(), context);
@@ -54,50 +61,74 @@ class _AddPostScreenState extends State<AddPostScreen> {
         context: context,
         builder: (context) {
           return SimpleDialog(
-            title: const Center(child: Text(' Take a Picture ')),
+            title: const Center(child: Text(' Choose a Picture ')),
             children: [
               SimpleDialogOption(
                 //Here we are padding because otherwise all the options wil get squeezed together
-                padding: const EdgeInsets.all(20),
+               padding: const EdgeInsets.only(right: 40 , left: 40 , top: 5 , bottom: 5),
                 onPressed: () async {
                   Navigator.of(context).pop();
-                  Uint8List? file = await pickImage(ImageSource.camera);
+                  Uint8List? file = await pickImage(ImageSource.gallery);
                   setState(() {
                     _file = file;
                   });
                 },
-                child: const Text('Take a photo'),
+                //Here we are padding because otherwise all the options wil get squeezed together
+               child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(40),
+                      border: Border.all(
+                    style: BorderStyle.solid,
+                    color: Colors.black, // Change the color as per your preference
+                    width: 2.0, // Adjust the width of the border
+                  )),
+                  child: const Center(
+                    child: Text('Choose a photo' , style: TextStyle(color: Colors.white)),
+                  ),
+                ),
+                
               ),
-              // SimpleDialogOption(
-              //   //Here we are padding because otherwise all the options wil get squeezed together
-              //   padding: const EdgeInsets.all(20),
-              //   onPressed: () async {
-              //     Navigator.of(context).pop();
-              //     Uint8List? file = await pickImage(ImageSource.gallery);
-              //     setState(() {
-              //       _file = file;
-              //     });
-              //   },
-              //   child: const Text('Choose from gallery'),
-              // ),
               SimpleDialogOption(
                 //Here we are padding because otherwise all the options wil get squeezed together
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.only(right: 40 , left: 40 , top: 5 , bottom: 5),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('Cancel'),
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(40),
+                      border: Border.all(
+                    style: BorderStyle.solid,
+                    color: Colors.black, // Change the color as per your preference
+                    width: 2.0, // Adjust the width of the border
+                  )),
+                  child: const Center(
+                    child: Text('Cancel' , style: TextStyle(color: Colors.white),),
+                  ),
+                ),
               )
+              // SimpleDialogOption(
+              //   //Here we are padding because otherwise all the options wil get squeezed together
+              //   padding: const EdgeInsets.all(20),
+              //   onPressed: () {
+              //     Navigator.of(context).pop();
+              //   },
+              //   child: const Text('Cancel'),
+              // )
             ],
           );
         });
   }
 
   void clearImage() {
-    Navigator.of(context).pop();
-    _file = null;
+    setState(() {
+          _file = null;
+    });
   }
-
   String uidReturn() {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     return _auth.currentUser!.uid;
@@ -106,26 +137,29 @@ class _AddPostScreenState extends State<AddPostScreen> {
   @override
   Widget build(BuildContext context) {
     return _file == null
-        ? Center(
-            child: IconButton(
-                icon: const Icon(Icons.upload),
-                onPressed: () => _selectImage(context)),
+        ? GestureDetector(
+            onTap: () => _selectImage(context),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Image.asset('assets/gallery.png'),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  'Open Gallery',
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontFamily: "Manrope",
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700),
+                )
+              ],
+            ),
           )
         : Scaffold(
-            // actions: [
-            //   TextButton(
-            //     onPressed:() => postImage(_file! , uidReturn()),
-            //     child: const Text(
-            //       'Post',
-            //       style: TextStyle(
-            //         color: Colors.blueAccent,
-            //         fontWeight: FontWeight.bold,
-            //         fontSize: 16,
-            //       ),
-            //     ),
-            //   )
-            // ],
-
             body: Column(
               children: [
                 _isLoading
@@ -152,9 +186,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   ),
                 ),
               TextButton(
-                style: ButtonStyle(
-              
-                ),
                 onPressed:() => postImage(_file! , uidReturn()),
                 child: const Text(
                   'Diagnose',
@@ -178,3 +209,4 @@ class _AddPostScreenState extends State<AddPostScreen> {
           );
   }
 }
+

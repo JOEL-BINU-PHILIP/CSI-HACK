@@ -1,4 +1,5 @@
 import 'package:csi_hackathon/constants.dart';
+import 'package:csi_hackathon/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 // import 'dart:typed_data';
 import 'package:csi_hackathon/widgets/text_Field_widget.dart';
@@ -61,6 +62,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
     if (res != "success") {
       showSnackBar(res, context);
+            Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const MainScreen()));
     } else {
       print(res);
       navigateToLoginScreen();
@@ -151,7 +154,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: _isLoading == true
                       ? const Center(
                           child: CircularProgressIndicator(
-                            color: darkgreen,
+                            color: scaffoldBackgroundColor,
                           ),
                         )
                       : const Center(
@@ -186,10 +189,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
             SizedBox(height: 44,),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child:Team
-              ),
+            bottom_text()
               ],
             ),
           ),
