@@ -29,25 +29,24 @@ class _AddPostScreenState extends State<AddPostScreen> {
   bool _isLoading = false;
   Uint8List? _file;
   final TextEditingController _descriptionController = TextEditingController();
-  void postImage( Uint8List image , String uid) async {
-        setState(() {
-          _isLoading = true;
-        });
-      try {
-        String res = await FireStoreMethods().uploadPost( _file!, uid);
-        setState(() {
-          _isLoading = false;
-        });
-        if (res == 'success') {
-          showSnackBar('Posted!', context);
-          clearImage();
-        }
-        else{
-          showSnackBar(res, context);
-        }
-      } catch (e) {
-        showSnackBar(e.toString(), context);
+  void postImage(Uint8List image, String uid) async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      String res = await FireStoreMethods().uploadPost(_file!, uid);
+      setState(() {
+        _isLoading = false;
+      });
+      if (res == 'success') {
+        showSnackBar('Posted!', context);
+        clearImage();
+      } else {
+        showSnackBar(res, context);
       }
+    } catch (e) {
+      showSnackBar(e.toString(), context);
+    }
   }
 
   _selectImage(BuildContext context) async {
@@ -55,7 +54,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         context: context,
         builder: (context) {
           return SimpleDialog(
-            title: const Text('Create a  Post'),
+            title: const Center(child: Text(' Take a Picture ')),
             children: [
               SimpleDialogOption(
                 //Here we are padding because otherwise all the options wil get squeezed together
@@ -84,7 +83,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
               SimpleDialogOption(
                 //Here we are padding because otherwise all the options wil get squeezed together
                 padding: const EdgeInsets.all(20),
-                onPressed: (){
+                onPressed: () {
                   Navigator.of(context).pop();
                 },
                 child: const Text('Cancel'),
@@ -95,12 +94,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
   }
 
   void clearImage() {
-    _file =null;
+    Navigator.of(context).pop();
+    _file = null;
   }
 
-  String uidReturn(){
-      final FirebaseAuth _auth = FirebaseAuth.instance;
-      return _auth.currentUser!.uid;
+  String uidReturn() {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    return _auth.currentUser!.uid;
   }
 
   @override
@@ -112,50 +112,67 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 onPressed: () => _selectImage(context)),
           )
         : Scaffold(
-              // actions: [
-              //   TextButton(
-              //     onPressed:() => postImage(_file! , uidReturn()),
-              //     child: const Text(
-              //       'Post',
-              //       style: TextStyle(
-              //         color: Colors.blueAccent,
-              //         fontWeight: FontWeight.bold,
-              //         fontSize: 16,
-              //       ),
-              //     ),
-              //   )
-              // ],
-            
+            // actions: [
+            //   TextButton(
+            //     onPressed:() => postImage(_file! , uidReturn()),
+            //     child: const Text(
+            //       'Post',
+            //       style: TextStyle(
+            //         color: Colors.blueAccent,
+            //         fontWeight: FontWeight.bold,
+            //         fontSize: 16,
+            //       ),
+            //     ),
+            //   )
+            // ],
+
             body: Column(
               children: [
-                _isLoading? const LinearProgressIndicator() : const Padding(padding: EdgeInsets.only(top: 0)),
+                _isLoading
+                    ? const LinearProgressIndicator()
+                    : const Padding(padding: EdgeInsets.only(top: 0)),
                 const Divider(),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 375,
-                        width: 375,
-                        child: AspectRatio(
-                          aspectRatio: 487 / 451,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: MemoryImage(_file!),
-                                fit: BoxFit.fill,
-                                alignment: FractionalOffset.topCenter,
-                              ),
-                            ),
+                  child: SizedBox(
+                    height: 375,
+                    width: 375,
+                    child: AspectRatio(
+                      aspectRatio: 487 / 451,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: MemoryImage(_file!),
+                            fit: BoxFit.fill,
+                            alignment: FractionalOffset.topCenter,
                           ),
                         ),
                       ),
-                      const Divider()
-                    ],
+                    ),
                   ),
-                )
+                ),
+              TextButton(
+                style: ButtonStyle(
+              
+                ),
+                onPressed:() => postImage(_file! , uidReturn()),
+                child: const Text(
+                  'Diagnose',
+                  style: TextStyle(
+                    color: darkgreen,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              TextButton(onPressed: clearImage,  child: const Text(
+                  'Clear',
+                  style: TextStyle(
+                    color: darkgreen,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),)
               ],
             ),
           );
