@@ -1,6 +1,6 @@
 import 'package:csi_hackathon/constants.dart';
 import 'package:csi_hackathon/firebase_options.dart';
-import 'package:csi_hackathon/screens/home_screen.dart';
+import 'package:csi_hackathon/screens/StartingPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light().copyWith(scaffoldBackgroundColor: scaffoldBackgroundColor),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo', 
-      home: HomeScreen()
+      home: StartingPage()
       );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:csi_hackathon/constants.dart';
 import 'package:flutter/material.dart';
 // import 'dart:typed_data';
 import 'package:csi_hackathon/widgets/text_Field_widget.dart';
@@ -79,136 +80,118 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Flexible(
-                flex: 2,
-                child: Container(),
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+              Hero(tag: 'Hero',child: Image.asset('assets/Sign_Signup_Page_Logo_color.png' , width: 155 , height: 155,)),
+              SizedBox(height: 15,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Sign in to ', style: TextStyle(fontSize: 22 , fontFamily: "Manrope" , color: Colors.black),),
+                  Text('Dermi' , style: style,),
+                ],
               ),
-              const SizedBox(
-                height: 64,
-              ),
-              // a circular widget to show and accept a selected file from gallery in phone
-              // Stack(
-              //   children: [
-              //     _image != null
-              //         ? CircleAvatar(
-              //             radius: 64,
-              //             backgroundImage: MemoryImage(_image!),
-              //           )
-              //         : const CircleAvatar(
-              //             radius: 64,
-              //             backgroundImage: AssetImage('assets/avatar.png'),
-              //           ),
-              //     Positioned(
-              //       bottom: -10,
-              //       left: 80,
-              //       child: IconButton(
-              //         onPressed: () {
-              //           selectImage();
-              //         },
-              //         icon: const Icon(
-              //           Icons.add_a_photo,
-              //           color: Colors.white,
-              //         ),
-              //       ),
-              //     )
-              //   ],
-              // ),
-              const SizedBox(
-                height: 24,
-              ),
-              //text field input for Username
-              TextfieldInput(
-                hintText: 'Enter your Username',
-                isPass: false,
-                inputType: TextInputType.text,
-                textEditingController: _usernameController,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              //text field input for Bio
-              // TextfieldInput(
-              //   hintText: 'Enter your bio',
-              //   isPass: false,
-              //   inputType: TextInputType.text,
-              //   textEditingController: _bioController,
-              // ),
-              // const SizedBox(
-              //   height: 24,
-              // ),
-              //text field input for email
-              TextfieldInput(
-                hintText: 'Enter your Email',
-                isPass: false,
-                inputType: TextInputType.emailAddress,
-                textEditingController: _emailController,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              //text field for password
-              TextfieldInput(
-                hintText: 'Enter Your Password',
-                isPass: true,
-                inputType: TextInputType.text,
-                textEditingController: _passwordController,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              //button signup
+                const SizedBox(
+                  height: 44,
+                ),
+                //text field input for Username
+                TextfieldInput(
+                  hintText: 'Enter your Username',
+                  isPass: false,
+                  inputType: TextInputType.text,
+                  textEditingController: _usernameController,
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                //text field input for Bio
+                // TextfieldInput(
+                //   hintText: 'Enter your bio',
+                //   isPass: false,
+                //   inputType: TextInputType.text,
+                //   textEditingController: _bioController,
+                // ),
+                // const SizedBox(
+                //   height: 24,
+                // ),
+                //text field input for email
+                TextfieldInput(
+                  hintText: 'Enter your Email',
+                  isPass: false,
+                  inputType: TextInputType.emailAddress,
+                  textEditingController: _emailController,
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                //text field for password
+                TextfieldInput(
+                  hintText: 'Enter Your Password',
+                  isPass: true,
+                  inputType: TextInputType.text,
+                  textEditingController: _passwordController,
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                //button signup
               TextButton(
                 onPressed: signUpUser,
                 child: Container(
                   width: double.infinity,
+                  height: 60,
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(4)),
-                  child: _isLoading
+                      color: darkgreen, borderRadius: BorderRadius.circular(20)),
+                  child: _isLoading == true
                       ? const Center(
                           child: CircularProgressIndicator(
-                            color: Colors.white,
+                            color: darkgreen,
                           ),
                         )
                       : const Center(
                           child: Text(
-                          'Sign Up',
+                          'Sign Up Now',
                           style: TextStyle(color: Colors.white),
                         )),
                 ),
               ),
-              const SizedBox(height: 12),
-
-              //Transitioning to logging up
-              Padding(
+                const SizedBox(height: 12),
+          
+                //Transitioning to logging up
+                Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(" Have an Account ?"),
+                    const Text("Don't have an Account ?"),
+                    SizedBox(width: 10,),
                     GestureDetector(
-                        onTap: navigateToLoginScreen,
+                      onTap: navigateToLoginScreen,
+                      child: Container(
                         child: const Text(
-                          " Login",
+                          "Click here!",
                           style: TextStyle(
-                              color: Colors.blue, fontWeight: FontWeight.bold),
+                            fontFamily: "Michroma",
+                              color: darkgreen, fontWeight: FontWeight.bold),
                         ),
-                   )
+                      ),
+                    )
                   ],
                 ),
               ),
-              Flexible(
-                flex: 2,
-                child: Container(),
-              )
-            ],
+            SizedBox(height: 44,),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child:Team
+              ),
+              ],
+            ),
           ),
         ),
       ),

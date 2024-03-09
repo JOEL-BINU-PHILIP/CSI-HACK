@@ -1,61 +1,52 @@
-import 'package:csi_hackathon/screens/login_screen.dart';
-import 'package:csi_hackathon/screens/signUp_Screen.dart';
+import 'package:csi_hackathon/constants.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+
+class Home extends StatelessWidget {
+  Home({super.key});
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView
+      (
+        physics: AlwaysScrollableScrollPhysics(),
+        child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height:20),
+            Text("Welcome to Dermi",style: subtitle,),
+            SizedBox(height:15),
+            Image.asset('assets/Intro_Box.png'),
 
-  void navigateToSignUp() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const SignUpScreen(),
-      ),
-    );
-  }
+            SizedBox(height:20),
+            Text("Features of Dermi",style: subtitle,),
+            Divider(
+              color: darkgreen,
+            ),
+            
 
-  //Method to navigate to The LoginScreen
-  void navigateToLoginScreen() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
-      ),
-    );
-  }
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset('assets/feature 1.png',fit: BoxFit.contain,),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset('assets/feature 2.png',fit:BoxFit.contain),
+            ),
 
-    return SafeArea(
-      child: Scaffold(
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                    AccessButton(buttonText: 'Login', onPressed: navigateToSignUp),
-                    AccessButton(buttonText: 'Register', onPressed: navigateToLoginScreen)
-                ],
-              ),
-    ));
-  }
-}
+            bottom_text(),
+
+    
 
 
-class AccessButton extends StatelessWidget {
-  const AccessButton(
-      {super.key, required this.buttonText, required this.onPressed});
-  final Function() onPressed;
-  final String buttonText;
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        decoration: BoxDecoration(
-            color: Colors.blue, borderRadius: BorderRadius.circular(4)),
-        child: Center(child: Text(buttonText)),
-      ),
+        
+          ],
+        ),
+      )),
     );
   }
 }
