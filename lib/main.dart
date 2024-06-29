@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light().copyWith(scaffoldBackgroundColor: scaffoldBackgroundColor),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo', 
-      home: StartingPage()
+      home: const StartingPage()
       );
   }
 }
