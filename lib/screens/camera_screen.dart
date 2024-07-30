@@ -27,7 +27,7 @@ class _CameraScreenState extends State<CameraScreen> {
   void navigateToResultScreen(String res) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ResultScreen(res: res,file:_file!),
+        builder: (context) => ResultScreen(res: res),
       ),
     );
   }

@@ -32,7 +32,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
     void navigateToResultScreen(String res) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) =>ResultScreen(res: res,file:_file!),
+        builder: (context) =>ResultScreen(res: res),
       ),
     );
   }
